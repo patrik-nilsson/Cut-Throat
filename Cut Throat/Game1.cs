@@ -8,11 +8,13 @@ namespace Cut_Throat
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Test testArena;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            IsMouseVisible = true;
         }
         protected override void Initialize()
         {
@@ -21,6 +23,8 @@ namespace Cut_Throat
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Textures.LoadContent(Content);
+            testArena = new Test();
         }
         protected override void UnloadContent()
         {
@@ -30,13 +34,18 @@ namespace Cut_Throat
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            testArena.Update();
 
             base.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin();
 
+            testArena.Draw(spriteBatch);
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }

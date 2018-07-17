@@ -16,12 +16,22 @@ namespace Cut_Throat
         protected bool Attacking { get; set; }
         protected bool Damaged { get; set; }
         protected Vector2 Position { get; set; }
-        protected Vector2 HitBox { get; set; }
+        public Rectangle HitBox { get; protected set; }
         protected Texture2D Texture { get; set; }
         protected int CurrentFrame { get; set; }
-        public Character()
+        public Character(Vector2 position)
         {
-
+            Health = 10000;
+            CurrentFrame = 0;
+            Position = position;
+        }
+        public virtual void Update()
+        {
+            HitBox = new Rectangle((int)Position.X - (HitBox.Width / 2), (int)Position.Y - HitBox.Height, HitBox.Width, HitBox.Height);
+        }
+        public virtual void Draw(SpriteBatch sb)
+        {
+            sb.Draw(Texture, new Rectangle((int)Position.X-(HitBox.Width/2), (int)Position.Y-HitBox.Height, HitBox.Width, HitBox.Height), Color.Blue);
         }
     }
 }
